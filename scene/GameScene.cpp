@@ -39,15 +39,16 @@ void GameScene::Initialize() {
 	viewProjection_.Initialize();
 	*/
 
+	/*
 	//サウンドデータの読み込み
 	soundDataHandle_ = audio_->LoadWave("fanfare.wav");
-	/*
-	//音声再生
-	audio_->PlayWave(soundDataHandle_);
-	*/
+	
+		//音声再生
+		audio_->PlayWave(soundDataHandle_);
 
-	//音声再生
+	//音声再生(ループ)
 	voiceHandle_ = audio_->PlayWave(soundDataHandle_, true);
+	*/
 }
 
 void GameScene::Update() {
@@ -61,10 +62,15 @@ void GameScene::Update() {
 	sprite_->SetPosition(position);
 	*/
 
+	/*
 	if (input_->TriggerKey(DIK_SPACE)) {
 	//音声停止
 		audio_->StopWave(voiceHandle_);
 	}
+	*/
+
+	//デバッグテキストの表示 (表示内容,X座標,Y座標,倍率)日本語は非対応
+	debugText_->Print("Kaizokuou ni oreha naru.", 50, 50, 1.0f);
 }
 
 void GameScene::Draw() {
