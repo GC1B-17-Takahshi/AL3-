@@ -60,6 +60,11 @@ class GameScene {
 	//3Dモデル
 	Model* model_ = nullptr;
 
+	//ワールドトランスフォーム
+	WorldTransform worldTransform_;
+	//ビュープロジェクション
+	ViewProjection viewProjection_;
+
 
 	/// <summary>
 	/// ゲームシーン用
