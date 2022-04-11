@@ -75,6 +75,14 @@ void GameScene::Update() {
 	//書式指定付き表示
 	debugText_->SetPos(50, 70);
 	debugText_->Printf("year:%d", 2001);
+
+	//変数の値をインクリメント
+	value_++;
+	//値を含んだ文字列
+	std::string strDebug = std::string("Value:") + 
+		std::to_string(value_);
+	//デバッグテキストの表示
+	debugText_->Print(strDebug, 50, 90, 1.0f);
 }
 
 void GameScene::Draw() {
