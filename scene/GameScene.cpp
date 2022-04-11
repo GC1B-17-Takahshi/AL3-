@@ -6,7 +6,13 @@ using namespace DirectX;
 
 GameScene::GameScene() {}
 
-GameScene::~GameScene() { delete sprite_; }
+GameScene::~GameScene() { 
+	/*
+	delete sprite_;
+	*/
+
+	delete model_;
+}
 
 void GameScene::Initialize() {
 
@@ -15,13 +21,21 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 	debugText_ = DebugText::GetInstance();
 
+	/*
 	//ファイル名を指定してテクスチャを読み込む
 	textureHandle_ = TextureManager::Load("Xion.png");
 	//スプライトの生成
 	sprite_ = Sprite::Create(textureHandle_, {100, 50});
+	*/
+
+	//ファイルを指定してテクスチャを読み込む
+	textureHandle_ = TextureManager::Load("Xion.png");
+	//3Dモデルの生成
+	model_ = Model::Create();
 }
 
 void GameScene::Update() {
+	/*
 	//スプライトの今の座標を取得
 	XMFLOAT2 position = sprite_->GetPosition();
 	//座標を{2,0}移動
@@ -29,6 +43,7 @@ void GameScene::Update() {
 	position.y += 1.0f;
 	//移動した座標をスプライトに反映
 	sprite_->SetPosition(position);
+	*/
 }
 
 void GameScene::Draw() {
@@ -44,7 +59,9 @@ void GameScene::Draw() {
 	/// ここに背景スプライトの描画処理を追加できる
 	/// </summary>
 
+	/*
 	sprite_->Draw();
+	*/
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
