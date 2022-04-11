@@ -9,9 +9,9 @@ GameScene::GameScene() {}
 GameScene::~GameScene() { 
 	/*
 	delete sprite_;
-	*/
 
 	delete model_;
+	*/
 }
 
 void GameScene::Initialize() {
@@ -26,7 +26,7 @@ void GameScene::Initialize() {
 	textureHandle_ = TextureManager::Load("Xion.png");
 	//スプライトの生成
 	sprite_ = Sprite::Create(textureHandle_, {100, 50});
-	*/
+
 
 	//ファイルを指定してテクスチャを読み込む
 	textureHandle_ = TextureManager::Load("Xion.png");
@@ -37,6 +37,12 @@ void GameScene::Initialize() {
 	worldTransform_.Initialize();
 	//ビュープロジェクションの初期化
 	viewProjection_.Initialize();
+	*/
+
+	//サウンドデータの読み込み
+	soundDataHandle_ = audio_->LoadWave("fanfare.wav");
+	//音声再生
+	audio_->PlayWave(soundDataHandle_);
 }
 
 void GameScene::Update() {
@@ -82,7 +88,9 @@ void GameScene::Draw() {
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
 
+	/*
 	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
+	*/
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();

@@ -49,12 +49,13 @@ class GameScene {
 	DebugText* debugText_ = nullptr;
 
 	/*
+	//2D スプライトの変数
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0;
 	//スプライト
 	Sprite* sprite_ = nullptr;
-	*/
 
+	//3D モデルの変数
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0;
 	//3Dモデル
@@ -64,6 +65,10 @@ class GameScene {
 	WorldTransform worldTransform_;
 	//ビュープロジェクション
 	ViewProjection viewProjection_;
+	*/
+
+	//サウンドデータハンドル
+	uint32_t soundDataHandle_ = 0;
 
 
 	/// <summary>
