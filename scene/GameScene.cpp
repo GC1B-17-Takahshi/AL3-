@@ -24,19 +24,32 @@ void GameScene::Initialize() {
 	//3Dモデルの生成
 	model_ = Model::Create();
 
-	//X,Y,Z 方向のスケーリングを設定
-	worldTransform_.scale_ = {5.0f, 5.0f, 5.0f};
+	//乱数シード生成器
+	std::random_device seed_gen;
+	//メルセンヌ・ツイスター
+	std::mt19937_64 engine(seed_gen());
+	//乱数範囲(回転角用)
+	std::uniform_real_distribution<float> rotDist(0.0f, XM_2PI);
+	//乱数範囲(座標用)
+	std::uniform_real_distribution<float> posDist(-10.0f,10.0f);
 
-	//X,Y,Z 軸周りの回転角を設定
-	//worldTransform_.rotation_ = {XM_PI / 4.0f, XM_PI / 4.0f, 0.0f};
-	//度数法でやるのならこっち↓
-	worldTransform_.rotation_ = {XMConvertToRadians(45.0f), XMConvertToRadians(45.0f), 0.0f};
+	for (size_t i = 0; i < _countof(worldTransform_); i++) {
 
-	//X,Y,Z 軸周りの平行移動を設定
-	worldTransform_.translation_ = { 10.0f,10.0f,10.0f};
+		// X,Y,Z 方向のスケーリングを設定
+		worldTransform_[i].scale_ = {1.0f, 1.0f, 1.0f};
 
-	//ワールドトランスフォームの初期化
-	worldTransform_.Initialize();
+		// X,Y,Z 軸周りの回転角を設定
+		worldTransform_[i].rotation_ = {rotDist(engine), rotDist(engine), rotDist(engine)};
+		//度数法でやるのならこっち↓
+		//worldTransform_[i].rotation_ = {XMConvertToRadians(45.0f), XMConvertToRadians(45.0f), 0.0f};
+
+		// X,Y,Z 軸周りの平行移動を設定
+		worldTransform_[i].translation_ = {posDist(engine), posDist(engine), posDist(engine)};
+
+		//ワールドトランスフォームの初期化
+		worldTransform_[i].Initialize();
+	}
+
 	//ビュープロジェクションの初期化
 	viewProjection_.Initialize();
 }
@@ -75,8 +88,10 @@ void GameScene::Draw() {
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
 
-	
-	model_->Draw(worldTransform_, viewProjection_, textureModelHandle_);
+	for (size_t i = 0; i < _countof(worldTransform_); i++) {
+
+		model_->Draw(worldTransform_[i], viewProjection_, textureModelHandle_);
+	}
 	
 
 	// 3Dオブジェクト描画後処理

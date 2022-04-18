@@ -11,6 +11,8 @@
 #include "WorldTransform.h"
 #include <DirectXMath.h>
 
+#include <random>
+
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -55,7 +57,7 @@ class GameScene {
 	Model* model_ = nullptr;
 
 	//ワールドトランスフォーム
-	WorldTransform worldTransform_;
+	WorldTransform worldTransform_[100];
 	//ビュープロジェクション
 	ViewProjection viewProjection_;
 
