@@ -32,6 +32,9 @@ void GameScene::Initialize() {
 	//度数法でやるのならこっち↓
 	worldTransform_.rotation_ = {0.0f, XMConvertToRadians(45.0f), 0.0f};
 
+	//X,Y,Z 軸周りの平行移動を設定
+	worldTransform_.translation_ = { 0.0f,10.0f,0.0f};
+
 	//ワールドトランスフォームの初期化
 	worldTransform_.Initialize();
 	//ビュープロジェクションの初期化
