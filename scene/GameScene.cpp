@@ -25,7 +25,12 @@ void GameScene::Initialize() {
 	model_ = Model::Create();
 
 	//X,Y,Z 方向のスケーリングを設定
-	worldTransform_.scale_ = {5.0f, 1.0f, 1.0f};
+	worldTransform_.scale_ = {5.0f, 5.0f, 5.0f};
+
+	//X,Y,Z 軸周りの回転角を設定
+	//worldTransform_.rotation_ = {0.0f, XM_PI / 4.0f, 0.0f};
+	//度数法でやるのならこっち↓
+	worldTransform_.rotation_ = {0.0f, XMConvertToRadians(45.0f), 0.0f};
 
 	//ワールドトランスフォームの初期化
 	worldTransform_.Initialize();
