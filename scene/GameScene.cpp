@@ -36,7 +36,7 @@ void GameScene::Initialize() {
 	for (size_t i = 0; i < _countof(worldTransform_); i++) {
 
 		// X,Y,Z 方向のスケーリングを設定
-		worldTransform_[i].scale_ = {1.0f, 1.0f, 1.0f};
+		worldTransform_[i].scale_ = {1.5f, 1.5f, 1.5f};
 
 		// X,Y,Z 軸周りの回転角を設定
 		worldTransform_[i].rotation_ = {rotDist(engine), rotDist(engine), rotDist(engine)};
