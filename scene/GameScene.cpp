@@ -90,11 +90,11 @@ void GameScene::Update() {
 	////行列の再計算
 	//viewProjection_.UpdateMatrix();
 
-	////デバッグ用表示
-	//debugText_->SetPos(50, 50);
-	//debugText_->Printf(
-	//  "eye:(%f,%f,%f)", viewProjection_.eye.x, viewProjection_.eye.y, viewProjection_.eye.z);
-	//
+	//デバッグ用表示
+	debugText_->SetPos(50, 50);
+	debugText_->Printf(
+	  "eye:(%f,%f,%f)", viewProjection_.eye.x, viewProjection_.eye.y, viewProjection_.eye.z);
+	
 
 
 #pragma endregion
@@ -123,11 +123,11 @@ void GameScene::Update() {
 	////行列の再計算
 	//viewProjection_.UpdateMatrix();
 
-	////デバッグ用表示
-	//debugText_->SetPos(50, 70);
-	//debugText_->Printf(
-	//  "target:(%f,%f,%f)", viewProjection_.target.x, viewProjection_.target.y,
-	//  viewProjection_.target.z);
+	//デバッグ用表示
+	debugText_->SetPos(50, 70);
+	debugText_->Printf(
+	  "target:(%f,%f,%f)", viewProjection_.target.x, viewProjection_.target.y,
+	  viewProjection_.target.z);
 
 
 #pragma endregion
@@ -150,10 +150,10 @@ void GameScene::Update() {
 	////行列の再計算
 	//viewProjection_.UpdateMatrix();
 
-	////デバッグ用表示
-	//debugText_->SetPos(50, 90);
-	//debugText_->Printf(
-	//  "up:(%f,%f,%f)", viewProjection_.up.x, viewProjection_.up.y, viewProjection_.up.z);
+	//デバッグ用表示
+	debugText_->SetPos(50, 90);
+	debugText_->Printf(
+	  "up:(%f,%f,%f)", viewProjection_.up.x, viewProjection_.up.y, viewProjection_.up.z);
 
 #pragma endregion
 
@@ -162,12 +162,12 @@ void GameScene::Update() {
 	//Fov変更処理
 	
 	//上キーで視野角が広がる
-	if (input_->PushKey(DIK_UP)) {
+	if (input_->PushKey(DIKEYBOARD_W)) {
 		viewProjection_.fovAngleY += 0.01f;
 		viewProjection_.fovAngleY = min(viewProjection_.fovAngleY, XM_PI);
 	}
 	//下キーで視野角が狭まる
-	else if (input_->PushKey(DIK_DOWN)) {
+	else if (input_->PushKey(DIKEYBOARD_S)) {
 		viewProjection_.fovAngleY -= 0.01f;
 		viewProjection_.fovAngleY =max(viewProjection_.fovAngleY, 0.01f);
 	}
