@@ -20,11 +20,12 @@ void GameScene::Initialize() {
 	debugText_ = DebugText::GetInstance();
 
 	//ファイルを指定してテクスチャを読み込む
-	textureModelHandle_ = TextureManager::Load("Xion.png");
+	textureHandle_ = TextureManager::Load("Xion.png");
 	//3Dモデルの生成
 	model_ = Model::Create();
 
 	//親(0番)
+	worldTransform_[0].translation_ = {0, 0, 0};
 	worldTransform_[0].Initialize();
 	//子(1番)
 	worldTransform_[1].translation_ = {0, 4.5f, 0};
@@ -33,15 +34,10 @@ void GameScene::Initialize() {
 
 
 	//カメラ垂直方向視野角を設定
-	viewProjection_.fovAngleY = XMConvertToRadians(10.0f);
+	viewProjection_.fovAngleY = XMConvertToRadians(25.0f);
 
 	//アスペクト比を設定
 	viewProjection_.aspectRatio = 1.0f;
-
-	//ニアクリップ距離を設定
-	viewProjection_.nearZ = 52.0f;
-	//ファークリップ距離を設定
-	viewProjection_.farZ = 53.0f;
 
 	//ビュープロジェクションの初期化
 	viewProjection_.Initialize();
@@ -49,79 +45,36 @@ void GameScene::Initialize() {
 
 void GameScene::Update() {
 
-#pragma region //視点移動処理//
+	//キャラクターの移動処理
 
-	//デバッグ用表示
-	debugText_->SetPos(50, 50);
-	debugText_->Printf(
-	  "eye:(%f,%f,%f)", viewProjection_.eye.x, viewProjection_.eye.y, viewProjection_.eye.z);
-	
+	//キャラクターの移動ベクトル
+	XMFLOAT3 move = {0, 0, 0};
 
+	//キャラクターの移動速度
+	const float kCharacterSpeed = 0.2f;
 
-#pragma endregion
-
-#pragma region //注視点移動処理//
-
-	//デバッグ用表示
-	debugText_->SetPos(50, 70);
-	debugText_->Printf(
-	  "target:(%f,%f,%f)", viewProjection_.target.x, viewProjection_.target.y,
-	  viewProjection_.target.z);
-
-
-#pragma endregion
-
-#pragma region //上方向回転処理//
-
-	//デバッグ用表示
-	debugText_->SetPos(50, 90);
-	debugText_->Printf(
-	  "up:(%f,%f,%f)", viewProjection_.up.x, viewProjection_.up.y, viewProjection_.up.z);
-
-#pragma endregion
-
-#pragma region //垂直方向視野角の変更処理//
-
-	//Fov変更処理
-	
-	//上キーで視野角が広がる
-	if (input_->PushKey(DIKEYBOARD_W)) {
-		viewProjection_.fovAngleY += 0.01f;
-		viewProjection_.fovAngleY = min(viewProjection_.fovAngleY, XM_PI);
-	}
-	//下キーで視野角が狭まる
-	else if (input_->PushKey(DIKEYBOARD_S)) {
-		viewProjection_.fovAngleY -= 0.01f;
-		viewProjection_.fovAngleY =max(viewProjection_.fovAngleY, 0.01f);
+	//押した方向で移動ベクトルを変更
+	if (input_->PushKey(DIK_LEFT)) {
+		move = {-kCharacterSpeed, 0, 0};
+	} else if (input_->PushKey(DIK_RIGHT)) {
+		move = {kCharacterSpeed, 0, 0};
 	}
 
-	//行列の再計算
-	viewProjection_.UpdateMatrix();
+	//注視点移動(ベクトルの加算)
+	worldTransform_[PartId::Root].translation_.x += move.x;
+	worldTransform_[PartId::Root].translation_.y += move.y;
+	worldTransform_[PartId::Root].translation_.z += move.z;
 
 	//デバッグ用表示
-	debugText_->SetPos(50, 110);
-	debugText_->Printf("fovAngleY(Degree):%f", XMConvertToDegrees(viewProjection_.fovAngleY));
+	debugText_->SetPos(50, 150);
+	debugText_->Printf(
+	  "Root:(%f,%f,%f)", worldTransform_[PartId::Root].translation_.x,
+	  worldTransform_[PartId::Root].translation_.y, 
+		worldTransform_[PartId::Root].translation_.z);
 
 
-#pragma endregion
-
-#pragma region //クリップ距離変更処理//
-
-	//上下キーでニアクリップ距離を増減
-	if (input_ ->PushKey(DIK_UP)) {
-		viewProjection_.nearZ += 0.1f;
-	} else if (input_->PushKey(DIK_DOWN)) {
-		viewProjection_.nearZ -= 0.1f;
-	}
-
-	//行列の再計算
-	viewProjection_.UpdateMatrix();
-
-	//デバッグ用表示
-	debugText_->SetPos(50, 130);
-	debugText_->Printf("nearZ:%f", viewProjection_.nearZ);
-
-#pragma endregion
+	worldTransform_[0].UpdateMatrix();
+	worldTransform_[1].UpdateMatrix();
 }
 
 void GameScene::Draw() {
@@ -152,10 +105,8 @@ void GameScene::Draw() {
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
 
-	for (size_t i = 0; i < _countof(worldTransform_); i++) {
-
-		model_->Draw(worldTransform_[i], viewProjection_, textureModelHandle_);
-	}
+	model_->Draw(worldTransform_[0], viewProjection_, textureHandle_);
+	model_->Draw(worldTransform_[1], viewProjection_, textureHandle_);
 	
 
 	// 3Dオブジェクト描画後処理

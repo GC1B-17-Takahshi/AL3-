@@ -44,6 +44,18 @@ class GameScene {
 	/// </summary>
 	void Draw();
 
+	enum PartId {
+		Root,	//大元
+		Spine,	//脊椎
+		Chest,	//胸
+		Head,	//頭
+		ArmL,	//左腕
+		ArmR,	//右腕
+		Hip,	//尻
+		LegL,	//左脚
+		LegR,	//右脚
+	};
+
   private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -52,7 +64,7 @@ class GameScene {
 
 	//3D モデルの変数
 	//テクスチャハンドル
-	uint32_t textureModelHandle_ = 0;
+	uint32_t textureHandle_ = 0;
 	//3Dモデル
 	Model* model_ = nullptr;
 
