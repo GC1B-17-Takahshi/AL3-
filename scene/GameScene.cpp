@@ -67,7 +67,6 @@ void GameScene::Initialize() {
 #pragma endregion
 
 
-
 	//カメラ垂直方向視野角を設定
 	viewProjection_.fovAngleY = XMConvertToRadians(50.0f);
 
@@ -103,6 +102,29 @@ void GameScene::Update() {
 	  "Root:(%f,%f,%f)", worldTransform_[PartId::Root].translation_.x,
 	  worldTransform_[PartId::Root].translation_.y, 
 		worldTransform_[PartId::Root].translation_.z);
+
+	//上半身の回転処理
+	//回転速度[ラジアン/frame]
+	const float kChestRotSpeed = 0.05f;
+
+	//押した方向で移動ベクトルを変更
+	if (input_->PushKey(DIK_U)) {
+		worldTransform_[PartId::Chest].rotation_.y -= kChestRotSpeed;
+	} 
+	else if (input_->PushKey(DIK_I)) {
+		worldTransform_[PartId::Chest].rotation_.y += kChestRotSpeed;
+	}
+
+	//下半身の回転処理
+	//回転速度
+	const float kHipRotSpeed = 0.05f;
+
+	//押した方向で移動ベクトルを変更
+	if (input_->PushKey(DIK_J)) {
+		worldTransform_[PartId::Hip].rotation_.y -= kChestRotSpeed;
+	} else if (input_->PushKey(DIK_K)) {
+		worldTransform_[PartId::Hip].rotation_.y += kChestRotSpeed;
+	}
 
 
 	worldTransform_[PartId::Root].UpdateMatrix();
